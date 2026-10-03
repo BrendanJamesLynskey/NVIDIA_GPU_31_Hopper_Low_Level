@@ -816,7 +816,7 @@
             <thead><tr><th>SKU</th><th>SMs (active)</th><th>HBM</th><th>BW</th><th>NVLink</th><th>TDP</th></tr></thead>
             <tbody>
                 <tr><td>H100 SXM5 80 GB</td><td>132</td><td>80 GB HBM3</td><td>3.35 TB/s</td><td>18&times; NVLink 4 = 900 GB/s</td><td>700 W</td></tr>
-                <tr><td>H100 PCIe 80 GB</td><td>114</td><td>80 GB HBM3</td><td>2.0 TB/s</td><td>NVLink bridge (2-card) = 600 GB/s</td><td>350 W</td></tr>
+                <tr><td>H100 PCIe 80 GB</td><td>114</td><td>80 GB HBM2e</td><td>2.0 TB/s</td><td>NVLink bridge (2-card) = 600 GB/s</td><td>350 W</td></tr>
                 <tr><td>H100 NVL 94 GB</td><td>132</td><td>94 GB HBM3</td><td>3.9 TB/s</td><td>2-card NVLink = 600 GB/s</td><td>2&times; 400 W</td></tr>
                 <tr><td>H200 SXM5 141 GB</td><td>132</td><td>141 GB HBM3e</td><td>4.8 TB/s</td><td>900 GB/s</td><td>700 W</td></tr>
                 <tr><td>GH200 480 / 624</td><td>132</td><td>96 / 144 GB HBM3 / HBM3e + 480 GB LPDDR5x</td><td>4.8 TB/s + C2C 900 GB/s</td><td>900 GB/s</td><td>1000 W (whole package)</td></tr>
@@ -849,7 +849,7 @@
         </div>
         <div class="hierarchy-level">
             <div class="hierarchy-label">Memory</div>
-            <div class="hierarchy-items"><span class="hierarchy-item accent">5 stacks HBM3 (one disabled on H100 80GB) &mdash; 5120-bit bus</span></div>
+            <div class="hierarchy-items"><span class="hierarchy-item accent">6 HBM3 stack sites (5 active on H100 80GB) &mdash; 5120-bit bus on H100</span></div>
         </div>
         <div class="hierarchy-level">
             <div class="hierarchy-label">IO</div>
@@ -1005,8 +1005,8 @@ bar.<span class="fn">arrive_and_wait</span>();   <span class="cm">// blocks here
             <thead><tr><th>SKU</th><th>Stack type</th><th>Stacks</th><th>Capacity</th><th>Pin rate</th><th>BW</th></tr></thead>
             <tbody>
                 <tr><td>H100 SXM5 80 GB</td><td>HBM3 16 GB stacks</td><td>5 (one disabled)</td><td>80 GB</td><td>5.23 Gbps</td><td>3.35 TB/s</td></tr>
-                <tr><td>H100 PCIe 80 GB</td><td>HBM3 16 GB stacks</td><td>5</td><td>80 GB</td><td>3.13 Gbps</td><td>2.0 TB/s</td></tr>
-                <tr><td>H100 NVL 94 GB</td><td>HBM3 24 GB stacks</td><td>5</td><td>94 GB</td><td>5.13 Gbps</td><td>3.9 TB/s</td></tr>
+                <tr><td>H100 PCIe 80 GB</td><td>HBM2e 16 GB stacks</td><td>5</td><td>80 GB</td><td>3.13 Gbps</td><td>2.0 TB/s</td></tr>
+                <tr><td>H100 NVL 94 GB</td><td>HBM3 16 GB stacks</td><td>6 (all active)</td><td>94 GB (96 GB raw)</td><td>5.13 Gbps</td><td>3.9 TB/s</td></tr>
                 <tr><td>H200 SXM5 141 GB</td><td>HBM3e 24 GB stacks</td><td>6</td><td>141 GB</td><td>6.4 Gbps</td><td>4.8 TB/s</td></tr>
                 <tr><td>GH200 480 GB</td><td>HBM3 96 GB + Grace LPDDR5x 480 GB</td><td>6 + Grace</td><td>576 GB</td><td>HBM3 4.0 + LPDDR5x 480 GB/s</td><td>HBM 4.0 TB/s + C2C 900 GB/s coherent</td></tr>
                 <tr><td>GH200 624 GB</td><td>HBM3e 144 GB + Grace LPDDR5x 480 GB</td><td>6 + Grace</td><td>624 GB</td><td>HBM3e 4.8 + LPDDR5x</td><td>HBM 4.8 TB/s + C2C 900 GB/s</td></tr>
@@ -1035,7 +1035,7 @@ bar.<span class="fn">arrive_and_wait</span>();   <span class="cm">// blocks here
         </table>
     </div>
 
-    <p><strong>HGX H100</strong>: 8&times; H100 SXM5 + <strong>4&times; NVSwitch 3.0</strong> chips (NVSwitch 3 has 64 NVLink 4 ports, ~14 TB/s aggregate per chip). Fully connected at 900 GB/s per pair. <strong>NVLink-C2C</strong> on GH200 connects Grace CPU to Hopper GPU at 900 GB/s coherent &mdash; same protocol family but in-package. Cross-node uses ConnectX-7 NDR 400 Gb/s InfiniBand (8 NICs per HGX H100).</p>
+    <p><strong>HGX H100</strong>: 8&times; H100 SXM5 + <strong>4&times; NVSwitch 3.0</strong> chips (NVSwitch 3 has 64 NVLink 4 ports, 3.2 TB/s aggregate per chip). Fully connected at 900 GB/s per pair. <strong>NVLink-C2C</strong> on GH200 connects Grace CPU to Hopper GPU at 900 GB/s coherent &mdash; same protocol family but in-package. Cross-node uses ConnectX-7 NDR 400 Gb/s InfiniBand (8 NICs per HGX H100).</p>
 </section>
 
 <section class="slide" id="slide-12">
@@ -1071,7 +1071,7 @@ bar.<span class="fn">arrive_and_wait</span>();   <span class="cm">// blocks here
     (function(){
         const data = {
             'h100s':    { sms:132, fp8:1979, bf16:989, fp64:34,  vram:'80 GB HBM3',  bw:3.35, tdp:'700 W', nvl:'18&times; NVLink 4 = 900 GB/s', note:'Datacenter flagship; HGX baseboard standard.' },
-            'h100p':    { sms:114, fp8:1513, bf16:756, fp64:26,  vram:'80 GB HBM3',  bw:2.0,  tdp:'350 W', nvl:'NVLink bridge (2-card)', note:'PCIe form factor; lower TDP; fewer SMs.' },
+            'h100p':    { sms:114, fp8:1513, bf16:756, fp64:26,  vram:'80 GB HBM2e', bw:2.0,  tdp:'350 W', nvl:'NVLink bridge (2-card)', note:'PCIe form factor; lower TDP; fewer SMs.' },
             'h100nvl':  { sms:132, fp8:1979, bf16:989, fp64:34,  vram:'94 GB HBM3',  bw:3.9,  tdp:'400 W', nvl:'2-card NVLink', note:'Inference-focused; pair sold together.' },
             'h200':     { sms:132, fp8:1979, bf16:989, fp64:34,  vram:'141 GB HBM3e', bw:4.8,  tdp:'700 W', nvl:'18&times; NVLink 4 = 900 GB/s', note:'HBM3e refresh; same TDP as H100.' },
             'gh200_480':{ sms:132, fp8:1979, bf16:989, fp64:34,  vram:'96 GB HBM3 + 480 GB LPDDR5x', bw:4.0, tdp:'1000 W package', nvl:'C2C 900 GB/s + 18&times; NVLink 4', note:'Grace + Hopper; unified address space; first NVLink-C2C system.' },
